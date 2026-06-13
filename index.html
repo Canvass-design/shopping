@@ -15,7 +15,6 @@
     --text: #1a1a18; --text2: #5f5e5a; --text3: #888780;
     --border: rgba(0,0,0,0.10); --border2: rgba(0,0,0,0.18);
     --radius: 10px; --radius-sm: 7px;
-    --amber: #BA7517; --amber-light: #FAEEDA;
   }
   @media (prefers-color-scheme: dark) {
     :root {
@@ -23,27 +22,22 @@
       --text: #f0efe8; --text2: #b4b2a9; --text3: #888780;
       --border: rgba(255,255,255,0.10); --border2: rgba(255,255,255,0.18);
       --green-light: #04342c; --green-dark: #9FE1CB; --green-mid: #5DCAA5;
-      --amber-light: #412402; --amber: #FAC775;
     }
   }
   html, body { height: 100%; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 16px; -webkit-tap-highlight-color: transparent; }
   body { display: flex; flex-direction: column; max-width: 480px; margin: 0 auto; }
 
-  /* Header */
   .header { padding: 14px 16px 0; }
   .header h1 { font-size: 22px; font-weight: 600; color: var(--text); }
   .header p { font-size: 13px; color: var(--text3); margin-top: 2px; }
 
-  /* Tab bar */
   .tabs { display: flex; gap: 6px; padding: 12px 16px 0; }
   .tab { flex: 1; padding: 8px 4px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--bg); font-size: 13px; font-weight: 500; color: var(--text2); cursor: pointer; text-align: center; white-space: nowrap; }
   .tab.active { background: var(--green); color: #fff; border-color: var(--green); }
 
-  /* Scroll area */
   .view { display: none; flex: 1; overflow-y: auto; padding: 14px 16px 100px; }
   .view.active { display: block; }
 
-  /* Meal cards */
   .meal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
   .meal-card { border: 1px solid var(--border); border-radius: var(--radius); padding: 11px 13px; cursor: pointer; background: var(--bg); user-select: none; }
   .meal-card.selected { border: 1.5px solid var(--green); background: var(--green-light); }
@@ -52,43 +46,52 @@
   .meal-ing { font-size: 12px; color: var(--text3); margin-top: 2px; }
   .meal-card.selected .meal-ing { color: var(--green-mid); }
 
-  /* Buttons */
   .btn-primary { display: block; width: 100%; padding: 13px; border-radius: var(--radius); border: none; background: var(--green); color: #fff; font-size: 15px; font-weight: 600; cursor: pointer; }
   .btn-primary:disabled { background: var(--bg3); color: var(--text3); cursor: default; }
   .btn-secondary { padding: 8px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border2); background: var(--bg); color: var(--text2); font-size: 13px; cursor: pointer; }
 
-  /* Summary line */
   .summary { font-size: 13px; color: var(--text3); text-align: center; margin: 8px 0; }
 
-  /* Progress */
   .progress-wrap { margin-bottom: 10px; }
   .progress-bar { height: 4px; border-radius: 2px; background: var(--bg3); overflow: hidden; margin-bottom: 4px; }
   .progress-fill { height: 100%; background: var(--green); border-radius: 2px; transition: width 0.2s; }
   .progress-label { font-size: 12px; color: var(--text3); text-align: right; }
 
-  /* Controls row */
   .controls { display: flex; gap: 8px; align-items: center; margin-bottom: 12px; }
   .controls select { flex: 1; font-size: 14px; padding: 8px 10px; border-radius: var(--radius-sm); border: 1px solid var(--border2); background: var(--bg); color: var(--text); }
 
-  /* Shop items */
-  .item-row { display: flex; align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--border); cursor: pointer; user-select: none; }
+  /* Three-state item rows */
+  .item-row { display: flex; align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--border); cursor: pointer; user-select: none; transition: opacity 0.15s; }
   .item-row:last-child { border-bottom: none; }
-  .checkbox { width: 22px; height: 22px; border: 1.5px solid var(--border2); border-radius: 5px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+
+  /* State: need (default) */
+  .item-row .checkbox { width: 22px; height: 22px; border: 1.5px solid var(--border2); border-radius: 5px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: var(--bg); transition: all 0.15s; }
+  .item-row .item-label { font-size: 15px; color: var(--text); transition: all 0.15s; }
+
+  /* State: skip (don't need) */
+  .item-row.skip { opacity: 0.38; }
+  .item-row.skip .checkbox { border-style: dashed; border-color: var(--text3); }
+  .item-row.skip .item-label { color: var(--text3); }
+
+  /* State: done (in basket) */
   .item-row.done .checkbox { background: var(--green); border-color: var(--green); }
+  .item-row.done .item-label { text-decoration: line-through; color: var(--text3); }
+
   .checkmark { display: none; width: 12px; height: 9px; }
   .checkmark path { stroke: #fff; stroke-width: 2.2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
   .item-row.done .checkmark { display: block; }
-  .item-label { font-size: 15px; color: var(--text); }
-  .item-row.done .item-label { text-decoration: line-through; color: var(--text3); }
 
-  /* Category */
-  .cat-label { font-size: 11px; font-weight: 600; color: var(--text3); letter-spacing: 0.06em; text-transform: uppercase; padding: 14px 0 5px; border-bottom: 1px solid var(--border); margin-bottom: 0; }
+  .cat-label { font-size: 11px; font-weight: 600; color: var(--text3); letter-spacing: 0.06em; text-transform: uppercase; padding: 14px 0 5px; border-bottom: 1px solid var(--border); }
 
-  /* Empty state */
   .empty { text-align: center; padding: 3rem 1rem; color: var(--text3); font-size: 14px; line-height: 1.6; }
   .empty-icon { font-size: 36px; display: block; margin-bottom: 10px; }
 
-  /* Quick list */
+  .legend { display: flex; gap: 14px; margin-bottom: 14px; padding: 10px 12px; background: var(--bg2); border-radius: var(--radius-sm); }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text2); }
+  .leg-box { width: 16px; height: 16px; border-radius: 3px; flex-shrink: 0; border: 1.5px solid var(--border2); }
+  .leg-box.skip { border-style: dashed; border-color: var(--text3); opacity: 0.5; }
+  .leg-box.done { background: var(--green); border-color: var(--green); }
+
   .search-wrap { position: relative; margin-bottom: 12px; }
   .search-input { width: 100%; padding: 10px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border2); background: var(--bg); color: var(--text); font-size: 15px; }
   .search-input::placeholder { color: var(--text3); }
@@ -97,12 +100,7 @@
   .suggestion-item:last-child { border-bottom: none; }
   .suggestion-item:active { background: var(--bg2); }
   .quick-section-label { font-size: 12px; color: var(--text3); margin: 14px 0 6px; font-weight: 500; }
-  .quick-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); cursor: pointer; user-select: none; }
-  .quick-item:last-child { border-bottom: none; }
-  .quick-item.done .item-label { text-decoration: line-through; color: var(--text3); }
-  .quick-item.done .checkbox { background: var(--green); border-color: var(--green); }
-  .quick-item.done .checkmark { display: block; }
-  .remove-btn { margin-left: auto; font-size: 18px; color: var(--text3); padding: 2px 6px; line-height: 1; cursor: pointer; }
+  .remove-btn { margin-left: auto; font-size: 20px; color: var(--text3); padding: 2px 6px; line-height: 1; cursor: pointer; }
 </style>
 </head>
 <body>
@@ -152,28 +150,50 @@ const ESSENTIALS = {
   "Pets": ["Dry cat food","Wet cat food"]
 };
 
-// All items for search
-const ALL_ITEMS = [...new Set([
-  ...Object.values(MEALS).flat(),
-  ...Object.values(ESSENTIALS).flat()
-])].sort((a,b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+const ALL_ITEMS = [...new Set([...Object.values(MEALS).flat(),...Object.values(ESSENTIALS).flat()])].sort((a,b)=>a.toLowerCase().localeCompare(b.toLowerCase()));
 
-// State
-let selectedMeals = new Set();
-let shopItems = [];
-let shopChecked = new Set();
-let essentialChecked = new Set();
-let shopFilter = 'all';
-let quickItems = []; // {name, done}
+// State — persisted to localStorage
+function loadState() {
+  try { return JSON.parse(localStorage.getItem('shopState') || 'null'); } catch(e) { return null; }
+}
+function saveState() {
+  try {
+    localStorage.setItem('shopState', JSON.stringify({
+      selectedMeals: [...selectedMeals],
+      shopItems,
+      shopStates,
+      essentialStates,
+      quickItems,
+      shopFilter
+    }));
+  } catch(e) {}
+}
+
+const saved = loadState();
+// 0=need, 1=skip, 2=done
+let selectedMeals = new Set(saved?.selectedMeals || []);
+let shopItems = saved?.shopItems || [];
+let shopStates = saved?.shopStates || {};       // index -> 0|1|2
+let essentialStates = saved?.essentialStates || {}; // item -> 0|1|2
+let quickItems = saved?.quickItems || [];        // [{name, state}]
+let shopFilter = saved?.shopFilter || 'all';
 let quickSearch = '';
 
 function checkSVG() {
   return `<svg class="checkmark" viewBox="0 0 12 9"><path d="M1 4.5L4.5 8L11 1"/></svg>`;
 }
 
+function stateClass(s) {
+  if(s===1) return 'skip';
+  if(s===2) return 'done';
+  return '';
+}
+
+function nextState(s) { return (s+1)%3; }
+
 function switchTab(tab) {
   document.querySelectorAll('.tab').forEach((t,i) => {
-    t.classList.toggle('active', ['plan','shop','essentials','quick'][i] === tab);
+    t.classList.toggle('active', ['plan','shop','essentials','quick'][i]===tab);
   });
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.getElementById('view-'+tab).classList.add('active');
@@ -187,23 +207,22 @@ function renderPlan() {
   const el = document.getElementById('view-plan');
   const n = selectedMeals.size;
   el.innerHTML = `
-    <div style="margin-bottom:12px">
-      <p style="font-size:13px;color:var(--text3);margin-bottom:10px">Tap the meals you want this week</p>
-      <div class="meal-grid">
-        ${Object.keys(MEALS).map(m => `
-          <div class="meal-card${selectedMeals.has(m)?' selected':''}" onclick="toggleMeal('${m.replace(/'/g,"\\'")}')">
-            <div class="meal-name">${m}</div>
-            <div class="meal-ing">${MEALS[m].length} ingredients</div>
-          </div>`).join('')}
-      </div>
-      <p class="summary">${n===0?'No meals selected yet':n+' meal'+(n>1?'s':'')+' selected'}</p>
-      <button class="btn-primary" onclick="generateList()" ${n===0?'disabled':''}>Build shopping list →</button>
-    </div>`;
+    <p style="font-size:13px;color:var(--text3);margin-bottom:10px">Tap the meals you want this week</p>
+    <div class="meal-grid">
+      ${Object.keys(MEALS).map(m=>`
+        <div class="meal-card${selectedMeals.has(m)?' selected':''}" onclick="toggleMeal('${m.replace(/'/g,"\\'")}')">
+          <div class="meal-name">${m}</div>
+          <div class="meal-ing">${MEALS[m].length} ingredients</div>
+        </div>`).join('')}
+    </div>
+    <p class="summary">${n===0?'No meals selected yet':n+' meal'+(n>1?'s':'')+' selected'}</p>
+    <button class="btn-primary" onclick="generateList()" ${n===0?'disabled':''}>Build shopping list →</button>
+  `;
 }
 
 function toggleMeal(meal) {
   selectedMeals.has(meal) ? selectedMeals.delete(meal) : selectedMeals.add(meal);
-  renderPlan();
+  saveState(); renderPlan();
 }
 
 function generateList() {
@@ -214,9 +233,10 @@ function generateList() {
       if(!seen.has(item.toLowerCase())) { seen.add(item.toLowerCase()); shopItems.push(item); }
     });
   });
-  shopItems.sort((a,b) => a.toLowerCase().localeCompare(b.toLowerCase()));
-  shopChecked = new Set();
+  shopItems.sort((a,b)=>a.toLowerCase().localeCompare(b.toLowerCase()));
+  shopStates = {};
   shopFilter = 'all';
+  saveState();
   switchTab('shop');
 }
 
@@ -227,128 +247,140 @@ function renderShop() {
     el.innerHTML = `<div class="empty"><span class="empty-icon">🛒</span>No list yet.<br>Pick your meals in the Plan tab first.</div>`;
     return;
   }
-  const done = [...shopChecked].length;
+  const done = shopItems.filter((_,i)=>(shopStates[i]||0)===2).length;
   const pct = Math.round(done/shopItems.length*100);
-  const visible = shopItems.filter((_,i) => {
-    if(shopFilter==='remaining') return !shopChecked.has(i);
-    if(shopFilter==='done') return shopChecked.has(i);
+  const visible = shopItems.filter((_,i)=>{
+    const s = shopStates[i]||0;
+    if(shopFilter==='remaining') return s!==2;
+    if(shopFilter==='done') return s===2;
     return true;
   });
   el.innerHTML = `
+    <div class="legend">
+      <div class="legend-item"><div class="leg-box"></div> Need</div>
+      <div class="legend-item"><div class="leg-box skip"></div> Don't need</div>
+      <div class="legend-item"><div class="leg-box done"></div> In basket</div>
+    </div>
     <div class="progress-wrap">
       <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
-      <div class="progress-label">${done} of ${shopItems.length} done</div>
+      <div class="progress-label">${done} of ${shopItems.length} in basket</div>
     </div>
     <div class="controls">
-      <select onchange="shopFilter=this.value;renderShop()">
+      <select onchange="shopFilter=this.value;saveState();renderShop()">
         <option value="all"${shopFilter==='all'?' selected':''}>All items</option>
         <option value="remaining"${shopFilter==='remaining'?' selected':''}>Still needed</option>
-        <option value="done"${shopFilter==='done'?' selected':''}>Got it</option>
+        <option value="done"${shopFilter==='done'?' selected':''}>In basket</option>
       </select>
-      <button class="btn-secondary" onclick="shopChecked=new Set();renderShop()">Reset</button>
+      <button class="btn-secondary" onclick="shopStates={};saveState();renderShop()">Reset</button>
     </div>
-    ${visible.map(item => {
+    ${visible.map(item=>{
       const i = shopItems.indexOf(item);
-      return `<div class="item-row${shopChecked.has(i)?' done':''}" onclick="toggleShop(${i})">
-        <div class="checkbox">${checkSVG()}</div>
+      const s = shopStates[i]||0;
+      return `<div class="item-row ${stateClass(s)}" onclick="cycleShop(${i})">
+        <div class="checkbox">${s===2?checkSVG():''}</div>
         <span class="item-label">${item}</span>
       </div>`;
     }).join('')}`;
 }
 
-function toggleShop(i) {
-  shopChecked.has(i) ? shopChecked.delete(i) : shopChecked.add(i);
-  renderShop();
+function cycleShop(i) {
+  shopStates[i] = nextState(shopStates[i]||0);
+  saveState(); renderShop();
 }
 
 // --- ESSENTIALS ---
 function renderEssentials() {
   const el = document.getElementById('view-essentials');
-  let html = `<div class="controls" style="margin-bottom:14px">
-    <span style="font-size:13px;color:var(--text3);flex:1">Tick off what you need</span>
-    <button class="btn-secondary" onclick="essentialChecked=new Set();renderEssentials()">Reset all</button>
-  </div>`;
-  Object.entries(ESSENTIALS).forEach(([cat, items]) => {
+  let html = `
+    <div class="legend">
+      <div class="legend-item"><div class="leg-box"></div> Need</div>
+      <div class="legend-item"><div class="leg-box skip"></div> Don't need</div>
+      <div class="legend-item"><div class="leg-box done"></div> In basket</div>
+    </div>
+    <div class="controls" style="margin-bottom:14px">
+      <span style="font-size:13px;color:var(--text3);flex:1">Tap to cycle through states</span>
+      <button class="btn-secondary" onclick="essentialStates={};saveState();renderEssentials()">Reset all</button>
+    </div>`;
+  Object.entries(ESSENTIALS).forEach(([cat,items])=>{
     html += `<div class="cat-label">${cat}</div>`;
-    html += items.map(item => `
-      <div class="item-row${essentialChecked.has(item)?' done':''}" onclick="toggleEssential('${item.replace(/'/g,"\\'")}')">
-        <div class="checkbox">${checkSVG()}</div>
+    html += items.map(item=>{
+      const s = essentialStates[item]||0;
+      return `<div class="item-row ${stateClass(s)}" onclick="cycleEssential('${item.replace(/'/g,"\\'")}')">
+        <div class="checkbox">${s===2?checkSVG():''}</div>
         <span class="item-label">${item}</span>
-      </div>`).join('');
+      </div>`;
+    }).join('');
   });
   el.innerHTML = html;
 }
 
-function toggleEssential(item) {
-  essentialChecked.has(item) ? essentialChecked.delete(item) : essentialChecked.add(item);
-  renderEssentials();
+function cycleEssential(item) {
+  essentialStates[item] = nextState(essentialStates[item]||0);
+  saveState(); renderEssentials();
 }
 
 // --- QUICK LIST ---
 function renderQuick() {
   const el = document.getElementById('view-quick');
-  const matches = quickSearch.length >= 1
-    ? ALL_ITEMS.filter(i => i.toLowerCase().includes(quickSearch.toLowerCase()) && !quickItems.find(q => q.name.toLowerCase()===i.toLowerCase())).slice(0,6)
+  const matches = quickSearch.length>=1
+    ? ALL_ITEMS.filter(i=>i.toLowerCase().includes(quickSearch.toLowerCase()) && !quickItems.find(q=>q.name.toLowerCase()===i.toLowerCase())).slice(0,6)
     : [];
 
-  const remaining = quickItems.filter(q => !q.done);
-  const done = quickItems.filter(q => q.done);
+  const remaining = quickItems.filter(q=>(q.state||0)!==2);
+  const done = quickItems.filter(q=>(q.state||0)===2);
 
   el.innerHTML = `
-    <p style="font-size:13px;color:var(--text3);margin-bottom:10px">Build a list for a quick top-up shop</p>
+    <p style="font-size:13px;color:var(--text3);margin-bottom:10px">For a quick top-up shop</p>
+    <div class="legend">
+      <div class="legend-item"><div class="leg-box"></div> Need</div>
+      <div class="legend-item"><div class="leg-box skip"></div> Don't need</div>
+      <div class="legend-item"><div class="leg-box done"></div> In basket</div>
+    </div>
     <div class="search-wrap">
       <input class="search-input" type="text" placeholder="Search or type an item…" value="${quickSearch.replace(/"/g,'&quot;')}"
         oninput="quickSearch=this.value;renderQuick()" id="quick-search">
-      ${matches.length ? `<div class="suggestions">${matches.map(m => `<div class="suggestion-item" onclick="addQuickItem('${m.replace(/'/g,"\\'")}')">+ ${m}</div>`).join('')}</div>` : ''}
-      ${quickSearch && !matches.length && !quickItems.find(q => q.name.toLowerCase()===quickSearch.toLowerCase()) ? `
-        <div class="suggestions"><div class="suggestion-item" onclick="addQuickItem('${quickSearch.replace(/'/g,"\\'")}')">+ Add "${quickSearch}"</div></div>` : ''}
+      ${matches.length?`<div class="suggestions">${matches.map(m=>`<div class="suggestion-item" onclick="addQuickItem('${m.replace(/'/g,"\\'")}')">+ ${m}</div>`).join('')}</div>`:''}
+      ${quickSearch&&!matches.length&&!quickItems.find(q=>q.name.toLowerCase()===quickSearch.toLowerCase())?`
+        <div class="suggestions"><div class="suggestion-item" onclick="addQuickItem('${quickSearch.replace(/'/g,"\\'")}')">+ Add "${quickSearch}"</div></div>`:''}
     </div>
-
-    ${!quickItems.length ? `<div class="empty" style="padding:2rem 0"><span class="empty-icon">⚡</span>Search above to add items</div>` : ''}
-
-    ${remaining.length ? `
+    ${!quickItems.length?`<div class="empty" style="padding:2rem 0"><span class="empty-icon">⚡</span>Search above to add items</div>`:''}
+    ${remaining.length?`
       <div class="quick-section-label">To get (${remaining.length})</div>
-      ${remaining.map((q,i) => quickItemHTML(q, quickItems.indexOf(q))).join('')}` : ''}
-
-    ${done.length ? `
-      <div class="quick-section-label" style="margin-top:16px">Got it (${done.length})</div>
-      ${done.map((q,i) => quickItemHTML(q, quickItems.indexOf(q))).join('')}` : ''}
-
-    ${quickItems.length ? `<button class="btn-secondary" style="margin-top:16px;width:100%;text-align:center" onclick="quickItems=[];renderQuick()">Clear list</button>` : ''}
+      ${remaining.map(q=>quickItemHTML(q,quickItems.indexOf(q))).join('')}`:''}
+    ${done.length?`
+      <div class="quick-section-label" style="margin-top:16px">In basket (${done.length})</div>
+      ${done.map(q=>quickItemHTML(q,quickItems.indexOf(q))).join('')}`:''}
+    ${quickItems.length?`<button class="btn-secondary" style="margin-top:16px;width:100%;text-align:center" onclick="quickItems=[];saveState();renderQuick()">Clear list</button>`:''}
   `;
-
-  // Keep focus on search
-  const inp = document.getElementById('quick-search');
-  if(inp && document.activeElement !== inp) inp.focus();
 }
 
-function quickItemHTML(q, idx) {
-  return `<div class="quick-item${q.done?' done':''}" onclick="toggleQuick(${idx})">
-    <div class="checkbox">${checkSVG()}</div>
+function quickItemHTML(q,idx) {
+  const s = q.state||0;
+  return `<div class="item-row ${stateClass(s)}" onclick="cycleQuick(${idx})">
+    <div class="checkbox">${s===2?checkSVG():''}</div>
     <span class="item-label">${q.name}</span>
     <span class="remove-btn" onclick="event.stopPropagation();removeQuick(${idx})">×</span>
   </div>`;
 }
 
 function addQuickItem(name) {
-  if(!quickItems.find(q => q.name.toLowerCase()===name.toLowerCase())) {
-    quickItems.push({name, done: false});
+  if(!quickItems.find(q=>q.name.toLowerCase()===name.toLowerCase())) {
+    quickItems.push({name, state:0});
   }
-  quickSearch = '';
-  renderQuick();
+  quickSearch='';
+  saveState(); renderQuick();
 }
 
-function toggleQuick(idx) {
-  quickItems[idx].done = !quickItems[idx].done;
-  renderQuick();
+function cycleQuick(idx) {
+  quickItems[idx].state = nextState(quickItems[idx].state||0);
+  saveState(); renderQuick();
 }
 
 function removeQuick(idx) {
-  quickItems.splice(idx, 1);
-  renderQuick();
+  quickItems.splice(idx,1);
+  saveState(); renderQuick();
 }
 
-// Init
 renderPlan();
 </script>
 </body>
