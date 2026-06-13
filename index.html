@@ -28,7 +28,7 @@
   body { display: flex; flex-direction: column; max-width: 480px; margin: 0 auto; }
 
   .header { padding: 14px 16px 0; }
-  .header h1 { font-size: 22px; font-weight: 600; color: var(--text); }
+  .header h1 { font-size: 22px; font-weight: 600; }
   .header p { font-size: 13px; color: var(--text3); margin-top: 2px; }
 
   .tabs { display: flex; gap: 6px; padding: 12px 16px 0; }
@@ -60,26 +60,29 @@
   .controls { display: flex; gap: 8px; align-items: center; margin-bottom: 12px; }
   .controls select { flex: 1; font-size: 14px; padding: 8px 10px; border-radius: var(--radius-sm); border: 1px solid var(--border2); background: var(--bg); color: var(--text); }
 
-  /* Three-state item rows */
-  .item-row { display: flex; align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--border); cursor: pointer; user-select: none; transition: opacity 0.15s; }
+  /* Three-state rows */
+  .item-row { display: flex; align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--border); cursor: pointer; user-select: none; }
   .item-row:last-child { border-bottom: none; }
-
-  /* State: need (default) */
-  .item-row .checkbox { width: 22px; height: 22px; border: 1.5px solid var(--border2); border-radius: 5px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: var(--bg); transition: all 0.15s; }
-  .item-row .item-label { font-size: 15px; color: var(--text); transition: all 0.15s; }
-
-  /* State: skip (don't need) */
-  .item-row.skip { opacity: 0.38; }
+  .item-row .checkbox { width: 22px; height: 22px; border: 1.5px solid var(--border2); border-radius: 5px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: var(--bg); }
+  .item-row .item-label { font-size: 15px; color: var(--text); }
+  .item-row.skip { opacity: 0.35; }
   .item-row.skip .checkbox { border-style: dashed; border-color: var(--text3); }
   .item-row.skip .item-label { color: var(--text3); }
-
-  /* State: done (in basket) */
   .item-row.done .checkbox { background: var(--green); border-color: var(--green); }
   .item-row.done .item-label { text-decoration: line-through; color: var(--text3); }
-
   .checkmark { display: none; width: 12px; height: 9px; }
   .checkmark path { stroke: #fff; stroke-width: 2.2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
   .item-row.done .checkmark { display: block; }
+
+  /* Meal group headers in shop */
+  .meal-group { margin-bottom: 6px; }
+  .meal-group-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; background: var(--bg2); border-radius: var(--radius-sm); margin-bottom: 2px; cursor: pointer; user-select: none; }
+  .meal-group-header-name { font-size: 14px; font-weight: 600; color: var(--text); }
+  .meal-group-header-meta { font-size: 12px; color: var(--text3); }
+  .meal-group-body { padding: 0 4px; }
+
+  /* Shared label */
+  .shared-label { font-size: 11px; font-weight: 600; color: var(--text3); letter-spacing: 0.06em; text-transform: uppercase; padding: 14px 0 5px; border-bottom: 1px solid var(--border); }
 
   .cat-label { font-size: 11px; font-weight: 600; color: var(--text3); letter-spacing: 0.06em; text-transform: uppercase; padding: 14px 0 5px; border-bottom: 1px solid var(--border); }
 
@@ -92,22 +95,20 @@
   .leg-box.skip { border-style: dashed; border-color: var(--text3); opacity: 0.5; }
   .leg-box.done { background: var(--green); border-color: var(--green); }
 
-  .search-wrap { position: relative; margin-bottom: 12px; }
-  .search-input { width: 100%; padding: 10px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border2); background: var(--bg); color: var(--text); font-size: 15px; }
+  .search-input { width: 100%; padding: 10px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border2); background: var(--bg); color: var(--text); font-size: 15px; margin-bottom: 12px; }
   .search-input::placeholder { color: var(--text3); }
-  .suggestions { border: 1px solid var(--border2); border-radius: var(--radius); background: var(--bg); margin-top: 4px; overflow: hidden; }
+  .suggestions { border: 1px solid var(--border2); border-radius: var(--radius); background: var(--bg); margin-top: -8px; margin-bottom: 12px; overflow: hidden; }
   .suggestion-item { padding: 10px 14px; font-size: 14px; color: var(--text); cursor: pointer; border-bottom: 1px solid var(--border); }
   .suggestion-item:last-child { border-bottom: none; }
   .suggestion-item:active { background: var(--bg2); }
   .quick-section-label { font-size: 12px; color: var(--text3); margin: 14px 0 6px; font-weight: 500; }
-  .remove-btn { margin-left: auto; font-size: 20px; color: var(--text3); padding: 2px 6px; line-height: 1; cursor: pointer; }
+  .remove-btn { margin-left: auto; font-size: 20px; color: var(--text3); padding: 2px 6px; line-height: 1; cursor: pointer; flex-shrink: 0; }
 </style>
 </head>
 <body>
 
 <div class="header">
   <h1>Weekly Shop</h1>
-  <p id="header-sub">Plan your meals, build your list</p>
 </div>
 
 <div class="tabs">
@@ -152,15 +153,13 @@ const ESSENTIALS = {
 
 const ALL_ITEMS = [...new Set([...Object.values(MEALS).flat(),...Object.values(ESSENTIALS).flat()])].sort((a,b)=>a.toLowerCase().localeCompare(b.toLowerCase()));
 
-// State — persisted to localStorage
 function loadState() {
-  try { return JSON.parse(localStorage.getItem('shopState') || 'null'); } catch(e) { return null; }
+  try { return JSON.parse(localStorage.getItem('shopState2')||'null'); } catch(e) { return null; }
 }
 function saveState() {
   try {
-    localStorage.setItem('shopState', JSON.stringify({
+    localStorage.setItem('shopState2', JSON.stringify({
       selectedMeals: [...selectedMeals],
-      shopItems,
       shopStates,
       essentialStates,
       quickItems,
@@ -170,32 +169,24 @@ function saveState() {
 }
 
 const saved = loadState();
-// 0=need, 1=skip, 2=done
 let selectedMeals = new Set(saved?.selectedMeals || []);
-let shopItems = saved?.shopItems || [];
-let shopStates = saved?.shopStates || {};       // index -> 0|1|2
-let essentialStates = saved?.essentialStates || {}; // item -> 0|1|2
-let quickItems = saved?.quickItems || [];        // [{name, state}]
+let shopStates = saved?.shopStates || {};        // "MealName|item" -> 0|1|2
+let essentialStates = saved?.essentialStates || {};
+let quickItems = saved?.quickItems || [];
 let shopFilter = saved?.shopFilter || 'all';
 let quickSearch = '';
 
 function checkSVG() {
   return `<svg class="checkmark" viewBox="0 0 12 9"><path d="M1 4.5L4.5 8L11 1"/></svg>`;
 }
-
-function stateClass(s) {
-  if(s===1) return 'skip';
-  if(s===2) return 'done';
-  return '';
-}
-
-function nextState(s) { return (s+1)%3; }
+function stateClass(s){ return s===1?'skip':s===2?'done':''; }
+function nextState(s){ return (s+1)%3; }
 
 function switchTab(tab) {
-  document.querySelectorAll('.tab').forEach((t,i) => {
-    t.classList.toggle('active', ['plan','shop','essentials','quick'][i]===tab);
+  document.querySelectorAll('.tab').forEach((t,i)=>{
+    t.classList.toggle('active',['plan','shop','essentials','quick'][i]===tab);
   });
-  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   document.getElementById('view-'+tab).classList.add('active');
   if(tab==='shop') renderShop();
   if(tab==='essentials') renderEssentials();
@@ -207,7 +198,7 @@ function renderPlan() {
   const el = document.getElementById('view-plan');
   const n = selectedMeals.size;
   el.innerHTML = `
-    <p style="font-size:13px;color:var(--text3);margin-bottom:10px">Tap the meals you want this week</p>
+    <p style="font-size:13px;color:var(--text3);margin-bottom:10px">Tap meals to add them to your shopping list</p>
     <div class="meal-grid">
       ${Object.keys(MEALS).map(m=>`
         <div class="meal-card${selectedMeals.has(m)?' selected':''}" onclick="toggleMeal('${m.replace(/'/g,"\\'")}')">
@@ -215,47 +206,60 @@ function renderPlan() {
           <div class="meal-ing">${MEALS[m].length} ingredients</div>
         </div>`).join('')}
     </div>
-    <p class="summary">${n===0?'No meals selected yet':n+' meal'+(n>1?'s':'')+' selected'}</p>
-    <button class="btn-primary" onclick="generateList()" ${n===0?'disabled':''}>Build shopping list →</button>
+    <p class="summary">${n===0?'No meals selected — shop list is empty':n+' meal'+(n>1?'s':'')+' on your list'}</p>
   `;
 }
 
 function toggleMeal(meal) {
-  selectedMeals.has(meal) ? selectedMeals.delete(meal) : selectedMeals.add(meal);
-  saveState(); renderPlan();
+  if(selectedMeals.has(meal)) {
+    selectedMeals.delete(meal);
+    // Remove states for this meal's items
+    Object.keys(shopStates).forEach(k=>{ if(k.startsWith(meal+'|')) delete shopStates[k]; });
+  } else {
+    selectedMeals.add(meal);
+  }
+  saveState();
+  renderPlan();
 }
 
-function generateList() {
-  const seen = new Set();
-  shopItems = [];
-  selectedMeals.forEach(meal => {
-    MEALS[meal].forEach(item => {
-      if(!seen.has(item.toLowerCase())) { seen.add(item.toLowerCase()); shopItems.push(item); }
+// Build grouped shop structure: per meal, deduplicate items shared across meals
+// Items appearing in multiple selected meals show under each meal but share state keyed by item name
+function buildShopGroups() {
+  // For each selected meal, list its items
+  // Items shared between meals: show under first meal only, with a note
+  const seen = {}; // lowercase item -> first meal name
+  const groups = [];
+  [...selectedMeals].forEach(meal => {
+    const items = MEALS[meal];
+    const own = [];
+    items.forEach(item => {
+      const key = item.toLowerCase();
+      if(!seen[key]) { seen[key] = meal; own.push({item, shared: false}); }
+      else { own.push({item, shared: true, sharedWith: seen[key]}); }
     });
+    groups.push({meal, items: own});
   });
-  shopItems.sort((a,b)=>a.toLowerCase().localeCompare(b.toLowerCase()));
-  shopStates = {};
-  shopFilter = 'all';
-  saveState();
-  switchTab('shop');
+  return groups;
 }
 
 // --- SHOP ---
 function renderShop() {
   const el = document.getElementById('view-shop');
-  if(!shopItems.length) {
-    el.innerHTML = `<div class="empty"><span class="empty-icon">🛒</span>No list yet.<br>Pick your meals in the Plan tab first.</div>`;
+  if(!selectedMeals.size) {
+    el.innerHTML = `<div class="empty"><span class="empty-icon">🛒</span>No meals selected yet.<br>Pick meals in the Plan tab.</div>`;
     return;
   }
-  const done = shopItems.filter((_,i)=>(shopStates[i]||0)===2).length;
-  const pct = Math.round(done/shopItems.length*100);
-  const visible = shopItems.filter((_,i)=>{
-    const s = shopStates[i]||0;
-    if(shopFilter==='remaining') return s!==2;
-    if(shopFilter==='done') return s===2;
-    return true;
-  });
-  el.innerHTML = `
+
+  const groups = buildShopGroups();
+
+  // Count totals for progress (unique items only, not shared duplicates)
+  const uniqueKeys = new Set();
+  groups.forEach(g => g.items.forEach(({item, shared}) => { if(!shared) uniqueKeys.add(item.toLowerCase()); }));
+  const total = uniqueKeys.size;
+  const done = [...uniqueKeys].filter(k => (shopStates[k]||0)===2).length;
+  const pct = total ? Math.round(done/total*100) : 0;
+
+  let html = `
     <div class="legend">
       <div class="legend-item"><div class="leg-box"></div> Need</div>
       <div class="legend-item"><div class="leg-box skip"></div> Don't need</div>
@@ -263,7 +267,7 @@ function renderShop() {
     </div>
     <div class="progress-wrap">
       <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
-      <div class="progress-label">${done} of ${shopItems.length} in basket</div>
+      <div class="progress-label">${done} of ${total} in basket</div>
     </div>
     <div class="controls">
       <select onchange="shopFilter=this.value;saveState();renderShop()">
@@ -272,19 +276,41 @@ function renderShop() {
         <option value="done"${shopFilter==='done'?' selected':''}>In basket</option>
       </select>
       <button class="btn-secondary" onclick="shopStates={};saveState();renderShop()">Reset</button>
-    </div>
-    ${visible.map(item=>{
-      const i = shopItems.indexOf(item);
-      const s = shopStates[i]||0;
-      return `<div class="item-row ${stateClass(s)}" onclick="cycleShop(${i})">
-        <div class="checkbox">${s===2?checkSVG():''}</div>
-        <span class="item-label">${item}</span>
-      </div>`;
-    }).join('')}`;
+    </div>`;
+
+  groups.forEach(({meal, items}) => {
+    const visibleItems = items.filter(({item, shared}) => {
+      if(shared) return false; // don't show duplicates
+      const s = shopStates[item.toLowerCase()]||0;
+      if(shopFilter==='remaining') return s!==2;
+      if(shopFilter==='done') return s===2;
+      return true;
+    });
+    if(!visibleItems.length) return;
+
+    html += `<div class="meal-group">
+      <div class="meal-group-header">
+        <span class="meal-group-header-name">${meal}</span>
+        <span class="meal-group-header-meta">${visibleItems.length} item${visibleItems.length!==1?'s':''}</span>
+      </div>
+      <div class="meal-group-body">
+        ${visibleItems.map(({item})=>{
+          const s = shopStates[item.toLowerCase()]||0;
+          return `<div class="item-row ${stateClass(s)}" onclick="cycleShop('${item.replace(/'/g,"\\'")}')">
+            <div class="checkbox">${s===2?checkSVG():''}</div>
+            <span class="item-label">${item}</span>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+  });
+
+  el.innerHTML = html;
 }
 
-function cycleShop(i) {
-  shopStates[i] = nextState(shopStates[i]||0);
+function cycleShop(item) {
+  const key = item.toLowerCase();
+  shopStates[key] = nextState(shopStates[key]||0);
   saveState(); renderShop();
 }
 
@@ -323,9 +349,8 @@ function cycleEssential(item) {
 function renderQuick() {
   const el = document.getElementById('view-quick');
   const matches = quickSearch.length>=1
-    ? ALL_ITEMS.filter(i=>i.toLowerCase().includes(quickSearch.toLowerCase()) && !quickItems.find(q=>q.name.toLowerCase()===i.toLowerCase())).slice(0,6)
+    ? ALL_ITEMS.filter(i=>i.toLowerCase().includes(quickSearch.toLowerCase())&&!quickItems.find(q=>q.name.toLowerCase()===i.toLowerCase())).slice(0,6)
     : [];
-
   const remaining = quickItems.filter(q=>(q.state||0)!==2);
   const done = quickItems.filter(q=>(q.state||0)===2);
 
@@ -336,20 +361,13 @@ function renderQuick() {
       <div class="legend-item"><div class="leg-box skip"></div> Don't need</div>
       <div class="legend-item"><div class="leg-box done"></div> In basket</div>
     </div>
-    <div class="search-wrap">
-      <input class="search-input" type="text" placeholder="Search or type an item…" value="${quickSearch.replace(/"/g,'&quot;')}"
-        oninput="quickSearch=this.value;renderQuick()" id="quick-search">
-      ${matches.length?`<div class="suggestions">${matches.map(m=>`<div class="suggestion-item" onclick="addQuickItem('${m.replace(/'/g,"\\'")}')">+ ${m}</div>`).join('')}</div>`:''}
-      ${quickSearch&&!matches.length&&!quickItems.find(q=>q.name.toLowerCase()===quickSearch.toLowerCase())?`
-        <div class="suggestions"><div class="suggestion-item" onclick="addQuickItem('${quickSearch.replace(/'/g,"\\'")}')">+ Add "${quickSearch}"</div></div>`:''}
-    </div>
+    <input class="search-input" type="text" placeholder="Search or type an item…" value="${quickSearch.replace(/"/g,'&quot;')}"
+      oninput="quickSearch=this.value;renderQuick()" id="quick-search">
+    ${matches.length?`<div class="suggestions">${matches.map(m=>`<div class="suggestion-item" onclick="addQuickItem('${m.replace(/'/g,"\\'")}')">+ ${m}</div>`).join('')}</div>`:''}
+    ${quickSearch&&!matches.length&&!quickItems.find(q=>q.name.toLowerCase()===quickSearch.toLowerCase())?`<div class="suggestions"><div class="suggestion-item" onclick="addQuickItem('${quickSearch.replace(/'/g,"\\'")}')">+ Add "${quickSearch}"</div></div>`:''}
     ${!quickItems.length?`<div class="empty" style="padding:2rem 0"><span class="empty-icon">⚡</span>Search above to add items</div>`:''}
-    ${remaining.length?`
-      <div class="quick-section-label">To get (${remaining.length})</div>
-      ${remaining.map(q=>quickItemHTML(q,quickItems.indexOf(q))).join('')}`:''}
-    ${done.length?`
-      <div class="quick-section-label" style="margin-top:16px">In basket (${done.length})</div>
-      ${done.map(q=>quickItemHTML(q,quickItems.indexOf(q))).join('')}`:''}
+    ${remaining.length?`<div class="quick-section-label">To get (${remaining.length})</div>${remaining.map(q=>quickItemHTML(q,quickItems.indexOf(q))).join('')}`:''}
+    ${done.length?`<div class="quick-section-label" style="margin-top:16px">In basket (${done.length})</div>${done.map(q=>quickItemHTML(q,quickItems.indexOf(q))).join('')}`:''}
     ${quickItems.length?`<button class="btn-secondary" style="margin-top:16px;width:100%;text-align:center" onclick="quickItems=[];saveState();renderQuick()">Clear list</button>`:''}
   `;
 }
@@ -364,18 +382,14 @@ function quickItemHTML(q,idx) {
 }
 
 function addQuickItem(name) {
-  if(!quickItems.find(q=>q.name.toLowerCase()===name.toLowerCase())) {
-    quickItems.push({name, state:0});
-  }
+  if(!quickItems.find(q=>q.name.toLowerCase()===name.toLowerCase())) quickItems.push({name,state:0});
   quickSearch='';
   saveState(); renderQuick();
 }
-
 function cycleQuick(idx) {
   quickItems[idx].state = nextState(quickItems[idx].state||0);
   saveState(); renderQuick();
 }
-
 function removeQuick(idx) {
   quickItems.splice(idx,1);
   saveState(); renderQuick();
