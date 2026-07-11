@@ -29,7 +29,6 @@
 
   .header { padding: 14px 16px 0; }
   .header h1 { font-size: 22px; font-weight: 600; }
-  .header p { font-size: 13px; color: var(--text3); margin-top: 2px; }
 
   .tabs { display: flex; gap: 6px; padding: 12px 16px 0; }
   .tab { flex: 1; padding: 8px 4px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--bg); font-size: 13px; font-weight: 500; color: var(--text2); cursor: pointer; text-align: center; white-space: nowrap; }
@@ -46,8 +45,6 @@
   .meal-ing { font-size: 12px; color: var(--text3); margin-top: 2px; }
   .meal-card.selected .meal-ing { color: var(--green-mid); }
 
-  .btn-primary { display: block; width: 100%; padding: 13px; border-radius: var(--radius); border: none; background: var(--green); color: #fff; font-size: 15px; font-weight: 600; cursor: pointer; }
-  .btn-primary:disabled { background: var(--bg3); color: var(--text3); cursor: default; }
   .btn-secondary { padding: 8px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border2); background: var(--bg); color: var(--text2); font-size: 13px; cursor: pointer; }
 
   .summary { font-size: 13px; color: var(--text3); text-align: center; margin: 8px 0; }
@@ -60,11 +57,10 @@
   .controls { display: flex; gap: 8px; align-items: center; margin-bottom: 12px; }
   .controls select { flex: 1; font-size: 14px; padding: 8px 10px; border-radius: var(--radius-sm); border: 1px solid var(--border2); background: var(--bg); color: var(--text); }
 
-  /* Three-state rows */
   .item-row { display: flex; align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--border); cursor: pointer; user-select: none; }
   .item-row:last-child { border-bottom: none; }
   .item-row .checkbox { width: 22px; height: 22px; border: 1.5px solid var(--border2); border-radius: 5px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: var(--bg); }
-  .item-row .item-label { font-size: 15px; color: var(--text); }
+  .item-row .item-label { font-size: 15px; color: var(--text); flex: 1; }
   .item-row.skip { opacity: 0.35; }
   .item-row.skip .checkbox { border-style: dashed; border-color: var(--text3); }
   .item-row.skip .item-label { color: var(--text3); }
@@ -74,15 +70,11 @@
   .checkmark path { stroke: #fff; stroke-width: 2.2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
   .item-row.done .checkmark { display: block; }
 
-  /* Meal group headers in shop */
   .meal-group { margin-bottom: 6px; }
-  .meal-group-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; background: var(--bg2); border-radius: var(--radius-sm); margin-bottom: 2px; cursor: pointer; user-select: none; }
+  .meal-group-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; background: var(--bg2); border-radius: var(--radius-sm); margin-bottom: 2px; }
   .meal-group-header-name { font-size: 14px; font-weight: 600; color: var(--text); }
   .meal-group-header-meta { font-size: 12px; color: var(--text3); }
   .meal-group-body { padding: 0 4px; }
-
-  /* Shared label */
-  .shared-label { font-size: 11px; font-weight: 600; color: var(--text3); letter-spacing: 0.06em; text-transform: uppercase; padding: 14px 0 5px; border-bottom: 1px solid var(--border); }
 
   .cat-label { font-size: 11px; font-weight: 600; color: var(--text3); letter-spacing: 0.06em; text-transform: uppercase; padding: 14px 0 5px; border-bottom: 1px solid var(--border); }
 
@@ -95,14 +87,13 @@
   .leg-box.skip { border-style: dashed; border-color: var(--text3); opacity: 0.5; }
   .leg-box.done { background: var(--green); border-color: var(--green); }
 
-  .search-input { width: 100%; padding: 10px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border2); background: var(--bg); color: var(--text); font-size: 15px; margin-bottom: 12px; }
-  .search-input::placeholder { color: var(--text3); }
-  .suggestions { border: 1px solid var(--border2); border-radius: var(--radius); background: var(--bg); margin-top: -8px; margin-bottom: 12px; overflow: hidden; }
-  .suggestion-item { padding: 10px 14px; font-size: 14px; color: var(--text); cursor: pointer; border-bottom: 1px solid var(--border); }
-  .suggestion-item:last-child { border-bottom: none; }
-  .suggestion-item:active { background: var(--bg2); }
+  /* Quick list */
+  .quick-add-row { display: flex; gap: 8px; margin-bottom: 16px; }
+  .quick-input { flex: 1; padding: 10px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border2); background: var(--bg); color: var(--text); font-size: 15px; }
+  .quick-input::placeholder { color: var(--text3); }
+  .quick-add-btn { padding: 10px 16px; border-radius: var(--radius-sm); border: none; background: var(--green); color: #fff; font-size: 15px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+  .remove-btn { font-size: 20px; color: var(--text3); padding: 2px 6px; line-height: 1; cursor: pointer; flex-shrink: 0; }
   .quick-section-label { font-size: 12px; color: var(--text3); margin: 14px 0 6px; font-weight: 500; }
-  .remove-btn { margin-left: auto; font-size: 20px; color: var(--text3); padding: 2px 6px; line-height: 1; cursor: pointer; flex-shrink: 0; }
 </style>
 </head>
 <body>
@@ -125,40 +116,38 @@
 
 <script>
 const MEALS = {
-  "Roast": ["Potatoes","Quorn fillets","Onions","Broccoli","Green beans","Gravy","Brussel sprouts","Stuffing"],
-  "Mexican": ["Wraps","Tortilla chips","Sour cream","Salsa","Pepper","Chicken","Mushrooms","Cheese","Packet rice","Garlic","Onions","Avocado","Courgette","Meat not meat"],
-  "Spag bol": ["Beef mince","Linda mince","Spaghetti","Tinned tomatoes","Passata","Basil","Garlic bread","Carrots","Celery"],
-  "Pizza night": ["Salad bag","Tomatoes","Spring onions","Avocado","Chips","Quorn fillets","Pizza"],
+  "Roast":        ["Chicken","Potatoes","Quorn fillets","Onions","Broccoli","Green beans","Peas","Carrots","Gravy","Brussel sprouts","Stuffing"],
+  "Mexican":      ["Wraps","Tortilla chips","Sour cream","Salsa","Pepper","Chicken","Mushrooms","Cheese","Packet rice","Garlic","Onions","Avocado","Courgette","Meat not meat"],
+  "Spag bol":     ["Beef mince","Linda mince","Spaghetti","Tinned tomatoes","Passata","Basil","Oregano","Garlic bread","Carrots","Celery"],
+  "Pizza night":  ["Salad bag","Tomatoes","Spring onions","Avocado","Chips","Quorn fillets","Pizza"],
   "Sausage mash": ["Potatoes","Quorn sausages","Chicken sausages","Broccoli","Green beans","Onions","Mushrooms","Gravy"],
-  "Chilli": ["Beef mince","Linda mince","Tinned tomatoes","Passata","Kidney beans","Rice","Tortilla chips","Onions","Paprika","Cumin","Oregano"],
-  "Thai curry": ["Ginger","Chicken","Coconut milk light","Aubergine","Sweet potato","Basmati rice","Red thai curry paste","Red pepper","Coriander","Garlic","Naan bread"],
-  "Midweek": ["Salad bag","Spring onions","Quorn fillets","Fish fingers","Tomatoes","Rice","Potatoes"],
-  "Stir fry": ["Sugarsnap peas","Carrots","Egg noodles","Soy sauce","Hoisin sauce","Ginger","Garlic","Cashew nuts","Peanut butter","Red pepper","Courgette"],
-  "Katsu curry": ["Curry sauce","Breaded Chicken","Breaded quorn fillets","Salad leaves","Pickled ginger","Rice","Soy sauce"]
+  "Chilli":       ["Beef mince","Linda mince","Tinned tomatoes","Passata","Kidney beans","Rice","Tortilla chips","Onions","Paprika","Cumin","Oregano"],
+  "Thai curry":   ["Ginger","Chicken","Coconut milk light","Aubergine","Sweet potato","Basmati rice","Red thai curry paste","Pak choi","Peanut butter","Soy sauce","Garlic","Naan bread"],
+  "Midweek":      ["Salad bag","Spring onions","Quorn fillets","Fish fingers","Tomatoes","Rice","Potatoes"],
+  "Stir fry":     ["Sugarsnap peas","Carrots","Egg noodles","Soy sauce","Hoisin sauce","Ginger","Garlic","Cashew nuts","Peanut butter","Red pepper","Courgette"],
+  "Katsu curry":  ["Breaded Chicken","Breaded quorn fillets","Turmeric","Coconut milk light","Onions","Garlic","Salad leaves","Pickled ginger","Rice","Soy sauce"]
 };
 
 const ESSENTIALS = {
-  "Dairy & eggs": ["Butter","Milk","Almond milk","Yoghurt 0%","Kefir yoghurt","Eggs","Cheese","Parmesan"],
-  "Fruit": ["Cooking apples","Oranges","Bananas","Lemons"],
-  "Breakfast & snacks": ["Bran flakes","Oats","Pumpkin seeds","Sunflower seeds","Raisins","Biscuits","Cribbies","Ryvita","Baked beans"],
-  "Bakery": ["Bread"],
-  "Frozen & drinks": ["Frozen fruit","Mini ice creams","Squash","Coffee","Sparkling water","Wine"],
+  "Dairy & eggs":        ["Butter","Milk","Oat milk","Yoghurt 0%","Kefir yoghurt","Eggs","Cheese","Parmesan"],
+  "Fruit":               ["Cooking apples","Oranges","Bananas","Lemons"],
+  "Breakfast & snacks":  ["Bran flakes","Oats","Pumpkin seeds","Sunflower seeds","Raisins","Biscuits","Cribbies","Ryvita","Baked beans"],
+  "Bakery":              ["Bread"],
+  "Frozen & drinks":     ["Frozen fruit","Ice cream or lollies","Squash","Coffee","Sparkling water","Wine"],
   "Condiments & pantry": ["Mayonnaise","Dijon mustard","Horseradish sauce","Plain flour","Self raising flour","Cinnamon","Paprika","Oregano","Cumin","Chilli flakes","Tuna","Peanut butter","Honey","Marmite","Sugar","Candarel","Meat not meat"],
-  "Household": ["Toilet rolls","Comfort","Washing liquid","Dishwasher tabs","Dishwasher salt","Rinse aid","Kitchen roll","Pedal bin bags","Bin bags","Food bags","Flash Floor cleaner","Baking paper","Cling film","Tin foil","Polish","Limescale remover","Toilet cleaner","Disinfectant"],
-  "Tins": ["Tomatoes for soup"],
-  "Herbs": ["Basil"],
-  "Health & beauty": ["Pantene shampoo","Caffeine shampoo","Shower gel","Hand wash","Cotton pads","Face cream"],
-  "Pets": ["Dry cat food","Wet cat food"]
+  "Household":           ["Toilet rolls","Comfort","Washing machine liquid","Dishwasher tabs","Dishwasher salt","Rinse aid","Kitchen roll","Pedal bin bags","Bin bags","Food bags","Flash Floor cleaner","Baking paper","Cling film","Tin foil","Polish","Limescale remover","Toilet cleaner","Disinfectant"],
+  "Herbs":               ["Basil"],
+  "Health & beauty":     ["Pantene shampoo","Caffeine shampoo","Shower gel","Hand wash","Cotton pads","Face cream"],
+  "Pets":                ["Dry cat food","Wet cat food"]
 };
 
-const ALL_ITEMS = [...new Set([...Object.values(MEALS).flat(),...Object.values(ESSENTIALS).flat()])].sort((a,b)=>a.toLowerCase().localeCompare(b.toLowerCase()));
-
+// State
 function loadState() {
-  try { return JSON.parse(localStorage.getItem('shopState2')||'null'); } catch(e) { return null; }
+  try { return JSON.parse(localStorage.getItem('shopState3')||'null'); } catch(e) { return null; }
 }
 function saveState() {
   try {
-    localStorage.setItem('shopState2', JSON.stringify({
+    localStorage.setItem('shopState3', JSON.stringify({
       selectedMeals: [...selectedMeals],
       shopStates,
       essentialStates,
@@ -169,23 +158,22 @@ function saveState() {
 }
 
 const saved = loadState();
-let selectedMeals = new Set(saved?.selectedMeals || []);
-let shopStates = saved?.shopStates || {};        // "MealName|item" -> 0|1|2
-let essentialStates = saved?.essentialStates || {};
-let quickItems = saved?.quickItems || [];
-let shopFilter = saved?.shopFilter || 'all';
-let quickSearch = '';
+let selectedMeals  = new Set(saved?.selectedMeals || []);
+let shopStates     = saved?.shopStates || {};      // "MealName||item" -> 0|1|2
+let essentialStates= saved?.essentialStates || {}; // item -> 0|1|2
+let quickItems     = saved?.quickItems || [];       // [{name, state}]
+let shopFilter     = saved?.shopFilter || 'all';
 
 function checkSVG() {
   return `<svg class="checkmark" viewBox="0 0 12 9"><path d="M1 4.5L4.5 8L11 1"/></svg>`;
 }
 function stateClass(s){ return s===1?'skip':s===2?'done':''; }
 function nextState(s){ return (s+1)%3; }
+function shopKey(meal,item){ return meal+'||'+item; }
 
 function switchTab(tab) {
-  document.querySelectorAll('.tab').forEach((t,i)=>{
-    t.classList.toggle('active',['plan','shop','essentials','quick'][i]===tab);
-  });
+  document.querySelectorAll('.tab').forEach((t,i)=>
+    t.classList.toggle('active',['plan','shop','essentials','quick'][i]===tab));
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   document.getElementById('view-'+tab).classList.add('active');
   if(tab==='shop') renderShop();
@@ -195,9 +183,8 @@ function switchTab(tab) {
 
 // --- PLAN ---
 function renderPlan() {
-  const el = document.getElementById('view-plan');
   const n = selectedMeals.size;
-  el.innerHTML = `
+  document.getElementById('view-plan').innerHTML = `
     <p style="font-size:13px;color:var(--text3);margin-bottom:10px">Tap meals to add them to your shopping list</p>
     <div class="meal-grid">
       ${Object.keys(MEALS).map(m=>`
@@ -206,40 +193,17 @@ function renderPlan() {
           <div class="meal-ing">${MEALS[m].length} ingredients</div>
         </div>`).join('')}
     </div>
-    <p class="summary">${n===0?'No meals selected — shop list is empty':n+' meal'+(n>1?'s':'')+' on your list'}</p>
-  `;
+    <p class="summary">${n===0?'No meals selected — shop list is empty':n+' meal'+(n>1?'s':'')+' on your list'}</p>`;
 }
 
 function toggleMeal(meal) {
   if(selectedMeals.has(meal)) {
     selectedMeals.delete(meal);
-    // Remove states for this meal's items
-    Object.keys(shopStates).forEach(k=>{ if(k.startsWith(meal+'|')) delete shopStates[k]; });
+    Object.keys(shopStates).forEach(k=>{ if(k.startsWith(meal+'||')) delete shopStates[k]; });
   } else {
     selectedMeals.add(meal);
   }
-  saveState();
-  renderPlan();
-}
-
-// Build grouped shop structure: per meal, deduplicate items shared across meals
-// Items appearing in multiple selected meals show under each meal but share state keyed by item name
-function buildShopGroups() {
-  // For each selected meal, list its items
-  // Items shared between meals: show under first meal only, with a note
-  const seen = {}; // lowercase item -> first meal name
-  const groups = [];
-  [...selectedMeals].forEach(meal => {
-    const items = MEALS[meal];
-    const own = [];
-    items.forEach(item => {
-      const key = item.toLowerCase();
-      if(!seen[key]) { seen[key] = meal; own.push({item, shared: false}); }
-      else { own.push({item, shared: true, sharedWith: seen[key]}); }
-    });
-    groups.push({meal, items: own});
-  });
-  return groups;
+  saveState(); renderPlan();
 }
 
 // --- SHOP ---
@@ -250,13 +214,18 @@ function renderShop() {
     return;
   }
 
-  const groups = buildShopGroups();
+  // Build groups — items appear once per meal, including repeats across meals
+  const groups = [...selectedMeals].map(meal => ({
+    meal,
+    items: MEALS[meal]
+  }));
 
-  // Count totals for progress (unique items only, not shared duplicates)
-  const uniqueKeys = new Set();
-  groups.forEach(g => g.items.forEach(({item, shared}) => { if(!shared) uniqueKeys.add(item.toLowerCase()); }));
-  const total = uniqueKeys.size;
-  const done = [...uniqueKeys].filter(k => (shopStates[k]||0)===2).length;
+  // Count all item slots for progress
+  let total = 0, done = 0;
+  groups.forEach(({meal, items}) => items.forEach(item => {
+    total++;
+    if((shopStates[shopKey(meal,item)]||0)===2) done++;
+  }));
   const pct = total ? Math.round(done/total*100) : 0;
 
   let html = `
@@ -279,24 +248,23 @@ function renderShop() {
     </div>`;
 
   groups.forEach(({meal, items}) => {
-    const visibleItems = items.filter(({item, shared}) => {
-      if(shared) return false; // don't show duplicates
-      const s = shopStates[item.toLowerCase()]||0;
+    const visible = items.filter(item => {
+      const s = shopStates[shopKey(meal,item)]||0;
       if(shopFilter==='remaining') return s!==2;
       if(shopFilter==='done') return s===2;
       return true;
     });
-    if(!visibleItems.length) return;
-
+    if(!visible.length) return;
     html += `<div class="meal-group">
       <div class="meal-group-header">
         <span class="meal-group-header-name">${meal}</span>
-        <span class="meal-group-header-meta">${visibleItems.length} item${visibleItems.length!==1?'s':''}</span>
+        <span class="meal-group-header-meta">${visible.length} item${visible.length!==1?'s':''}</span>
       </div>
       <div class="meal-group-body">
-        ${visibleItems.map(({item})=>{
-          const s = shopStates[item.toLowerCase()]||0;
-          return `<div class="item-row ${stateClass(s)}" onclick="cycleShop('${item.replace(/'/g,"\\'")}')">
+        ${visible.map(item => {
+          const s = shopStates[shopKey(meal,item)]||0;
+          const km = meal.replace(/'/g,"\\'"); const ki = item.replace(/'/g,"\\'");
+          return `<div class="item-row ${stateClass(s)}" onclick="cycleShop('${km}','${ki}')">
             <div class="checkbox">${s===2?checkSVG():''}</div>
             <span class="item-label">${item}</span>
           </div>`;
@@ -308,15 +276,14 @@ function renderShop() {
   el.innerHTML = html;
 }
 
-function cycleShop(item) {
-  const key = item.toLowerCase();
-  shopStates[key] = nextState(shopStates[key]||0);
+function cycleShop(meal, item) {
+  const k = shopKey(meal, item);
+  shopStates[k] = nextState(shopStates[k]||0);
   saveState(); renderShop();
 }
 
 // --- ESSENTIALS ---
 function renderEssentials() {
-  const el = document.getElementById('view-essentials');
   let html = `
     <div class="legend">
       <div class="legend-item"><div class="leg-box"></div> Need</div>
@@ -331,13 +298,14 @@ function renderEssentials() {
     html += `<div class="cat-label">${cat}</div>`;
     html += items.map(item=>{
       const s = essentialStates[item]||0;
-      return `<div class="item-row ${stateClass(s)}" onclick="cycleEssential('${item.replace(/'/g,"\\'")}')">
+      const ki = item.replace(/'/g,"\\'");
+      return `<div class="item-row ${stateClass(s)}" onclick="cycleEssential('${ki}')">
         <div class="checkbox">${s===2?checkSVG():''}</div>
         <span class="item-label">${item}</span>
       </div>`;
     }).join('');
   });
-  el.innerHTML = html;
+  document.getElementById('view-essentials').innerHTML = html;
 }
 
 function cycleEssential(item) {
@@ -347,32 +315,23 @@ function cycleEssential(item) {
 
 // --- QUICK LIST ---
 function renderQuick() {
-  const el = document.getElementById('view-quick');
-  const matches = quickSearch.length>=1
-    ? ALL_ITEMS.filter(i=>i.toLowerCase().includes(quickSearch.toLowerCase())&&!quickItems.find(q=>q.name.toLowerCase()===i.toLowerCase())).slice(0,6)
-    : [];
   const remaining = quickItems.filter(q=>(q.state||0)!==2);
-  const done = quickItems.filter(q=>(q.state||0)===2);
-
-  el.innerHTML = `
-    <p style="font-size:13px;color:var(--text3);margin-bottom:10px">For a quick top-up shop</p>
-    <div class="legend">
-      <div class="legend-item"><div class="leg-box"></div> Need</div>
-      <div class="legend-item"><div class="leg-box skip"></div> Don't need</div>
-      <div class="legend-item"><div class="leg-box done"></div> In basket</div>
+  const done      = quickItems.filter(q=>(q.state||0)===2);
+  document.getElementById('view-quick').innerHTML = `
+    <p style="font-size:13px;color:var(--text3);margin-bottom:12px">For a quick top-up shop — type anything and tap Add</p>
+    <div class="quick-add-row">
+      <input class="quick-input" id="quick-input" type="text" placeholder="Type an item…"
+        onkeydown="if(event.key==='Enter'){event.preventDefault();addQuickItem();}">
+      <button class="quick-add-btn" onclick="addQuickItem()">Add</button>
     </div>
-    <input class="search-input" type="text" placeholder="Search or type an item…" value="${quickSearch.replace(/"/g,'&quot;')}"
-      oninput="quickSearch=this.value;renderQuick()" id="quick-search">
-    ${matches.length?`<div class="suggestions">${matches.map(m=>`<div class="suggestion-item" onclick="addQuickItem('${m.replace(/'/g,"\\'")}')">+ ${m}</div>`).join('')}</div>`:''}
-    ${quickSearch&&!matches.length&&!quickItems.find(q=>q.name.toLowerCase()===quickSearch.toLowerCase())?`<div class="suggestions"><div class="suggestion-item" onclick="addQuickItem('${quickSearch.replace(/'/g,"\\'")}')">+ Add "${quickSearch}"</div></div>`:''}
-    ${!quickItems.length?`<div class="empty" style="padding:2rem 0"><span class="empty-icon">⚡</span>Search above to add items</div>`:''}
-    ${remaining.length?`<div class="quick-section-label">To get (${remaining.length})</div>${remaining.map(q=>quickItemHTML(q,quickItems.indexOf(q))).join('')}`:''}
-    ${done.length?`<div class="quick-section-label" style="margin-top:16px">In basket (${done.length})</div>${done.map(q=>quickItemHTML(q,quickItems.indexOf(q))).join('')}`:''}
-    ${quickItems.length?`<button class="btn-secondary" style="margin-top:16px;width:100%;text-align:center" onclick="quickItems=[];saveState();renderQuick()">Clear list</button>`:''}
+    ${!quickItems.length ? `<div class="empty" style="padding:2rem 0"><span class="empty-icon">⚡</span>Type above to add items</div>` : ''}
+    ${remaining.length ? `<div class="quick-section-label">To get (${remaining.length})</div>${remaining.map(q=>quickItemHTML(q,quickItems.indexOf(q))).join('')}` : ''}
+    ${done.length ? `<div class="quick-section-label" style="margin-top:16px">In basket (${done.length})</div>${done.map(q=>quickItemHTML(q,quickItems.indexOf(q))).join('')}` : ''}
+    ${quickItems.length ? `<button class="btn-secondary" style="margin-top:16px;width:100%;text-align:center" onclick="quickItems=[];saveState();renderQuick()">Clear list</button>` : ''}
   `;
 }
 
-function quickItemHTML(q,idx) {
+function quickItemHTML(q, idx) {
   const s = q.state||0;
   return `<div class="item-row ${stateClass(s)}" onclick="cycleQuick(${idx})">
     <div class="checkbox">${s===2?checkSVG():''}</div>
@@ -381,15 +340,22 @@ function quickItemHTML(q,idx) {
   </div>`;
 }
 
-function addQuickItem(name) {
-  if(!quickItems.find(q=>q.name.toLowerCase()===name.toLowerCase())) quickItems.push({name,state:0});
-  quickSearch='';
+function addQuickItem() {
+  const inp = document.getElementById('quick-input');
+  const name = inp.value.trim();
+  if(!name) return;
+  quickItems.push({name, state:0});
+  inp.value = '';
   saveState(); renderQuick();
+  // Restore focus so keyboard stays up
+  document.getElementById('quick-input').focus();
 }
+
 function cycleQuick(idx) {
   quickItems[idx].state = nextState(quickItems[idx].state||0);
   saveState(); renderQuick();
 }
+
 function removeQuick(idx) {
   quickItems.splice(idx,1);
   saveState(); renderQuick();
